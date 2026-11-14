@@ -1,0 +1,10 @@
+schema_version = 2
+
+[soc]
+name = "exynos7870"
+description = "Samsung Exynos 7870 (S5E7870)"
+source_repository = "https://github.com/alessandro-fontana/linux-exynos7870"
+source_revision = "d1979ff14a1d00807c7b05faef3330967fa60d3a"
+
+[components]
+include = ["ArmCpu", "ArmDTPlatform"]
