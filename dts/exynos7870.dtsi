@@ -65,7 +65,13 @@
             #interrupt-cells = <3>;
             #address-cells = <0>;
             interrupt-controller;
-            interrupts = <1 9 0xff04>;
+            // No interrupts property here. XNU's IODTFindInterruptParent()
+            // returns NULL for a node that is itself an interrupt controller,
+            // and IODTGetICellCounts(NULL) then faults on address 0 while
+            // IOPlatformExpertDevice::init walks the ADT. The GIC maintenance
+            // PPI (9) is not used by the bring-up; add it with a self-parent
+            // only after the IOKit path handles controllers with their own
+            // interrupt specifiers.
         };
 
         // DWMMC (eMMC) at 0x13540000, DECON at 0x14830000, the Mali-T830 at
