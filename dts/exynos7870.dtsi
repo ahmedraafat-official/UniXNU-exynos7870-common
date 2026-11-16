@@ -74,9 +74,26 @@
             // interrupt specifiers.
         };
 
-        // DWMMC (eMMC) at 0x13540000, DECON at 0x14830000, the Mali-T830 at
-        // 0x11400000 and the debug UART at 0x13820000 are added with their
-        // drivers. They are deliberately absent from the first ADT: an
-        // exported node with no driver only adds probe noise.
+        // The eMMC controller. UEFI's MshcDxe identifies the card and enables
+        // the CIU clock; the XNU driver only needs the register window, the
+        // interrupt and the 8-bit non-removable description. Clocks are left
+        // to UEFI for the PIO bring-up (no CMU phandles in this ADT yet).
+        dwmmc0: dwmmc0@13540000 {
+            compatible = "samsung,exynos-dw-mshc";
+            reg = <0 0x13540000 0 0x2000>;
+            interrupts = <0 0xf5 0>;
+            #address-cells = <1>;
+            #size-cells = <0>;
+            non-removable;
+            fifo-depth = <0x40>;
+            bus-width = <8>;
+            samsung,dw-mshc-sdr-timing = <3 0 4 0>;
+            status = "okay";
+        };
+
+        // DECON at 0x14830000, the Mali-T830 at 0x11400000 and the debug UART
+        // at 0x13820000 are added with their drivers. They stay absent from
+        // the ADT until then: an exported node with no driver only adds probe
+        // noise.
     };
 };
