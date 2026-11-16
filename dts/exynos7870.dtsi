@@ -80,6 +80,7 @@
         // to UEFI for the PIO bring-up (no CMU phandles in this ADT yet).
         dwmmc0: dwmmc0@13540000 {
             compatible = "samsung,exynos-dw-mshc";
+            unixnu,adt-name = "dwmmc0";
             reg = <0 0x13540000 0 0x2000>;
             interrupts = <0 0xf5 0>;
             #address-cells = <1>;
